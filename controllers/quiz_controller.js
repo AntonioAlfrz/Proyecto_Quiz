@@ -22,7 +22,14 @@ exports.answer = function(req,res){
 
 // GET /quizes
 exports.index = function(req,res){
-	models.Quiz.findAll().then(function(quizes){
-		res.render('quizes/index.ejs',{quizes: quizes});
-	})
+	if (req.query.search !== "Búsqueda"){
+		var search= '%' +(req.query.search).replace(/\s/g,"%")+'%';
+		models.Quiz.findAll({where: ["pregunta like ?",req.query.search]}).then(function(quizes){
+			res.render('quizes/index.ejs');
+		})
+	}else{
+		models.Quiz.findAll().then(function(quizes){
+			res.render('quizes/index.ejs',{quizes: quizes});
+		})
+	}
 };

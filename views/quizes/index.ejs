@@ -4,6 +4,11 @@
 	<meta charset="utf-8">
 </head>
 <body>
+	<form method="get" action="/quizes">
+		<p>Busque una pregunta</p>
+		<input type="text" name="search" value="Búsqueda">
+		<input type="submit" value="Enviar">
+	</form>
 	<table>
 		<% var i; for (i=0; i<quizes.length; i++){ %>
 		<tr>

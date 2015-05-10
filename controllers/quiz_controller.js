@@ -26,7 +26,10 @@ exports.answer = function(req,res){
 		resultado='Correcto';
 	}
 	res.render('quizes/answer',
-		{quiz: req.quiz, respuesta: resultado});
+		{quiz: req.quiz,
+			respuesta: resultado,
+			errors: []
+		});
 };
 
 // GET /quizes
@@ -34,13 +37,13 @@ exports.index = function(req,res){
 	if (req.query.search !== undefined){
 		var search= '%' +(String(req.query.search)).replace(/\s/g,"%")+'%';
 		models.Quiz.findAll({where: ["pregunta like ?",search]}).then(function(quizes){
-			res.render('quizes/index.ejs',{quizes: quizes});
+			res.render('quizes/index.ejs',{quizes: quizes, errors: []});
 		}).catch(function(error){
 			next(error);
 		})
 	}else{
 		models.Quiz.findAll().then(function(quizes){
-			res.render('quizes/index.ejs',{quizes: quizes});
+			res.render('quizes/index.ejs',{quizes: quizes, errors: []});
 		}).catch(function(error){
 			next(error);
 		})
@@ -50,15 +53,22 @@ exports.index = function(req,res){
 //GET /quizes/new
 exports.new = function(req,res){
 	var quiz = models.Quiz.build(
-		{pregunta: "Pregunta", respuesta: "Respuesta"}
-	);
-	res.render('quizes/new', {quiz: quiz});
+		// pregunta: "Pregunta", más cómodo vacíos
+		{pregunta: "", respuesta: ""}
+		);
+	res.render('quizes/new', {quiz: quiz, errors: []});
 };
 
 // POST /quizes/create
 exports.create = function(req,res){
 	var quiz = models.Quiz.build(req.body.quiz);
-	quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
-		res.redirect('/quizes');
-	})
+	quiz.validate().then(function(err){
+		if(err){
+			res.render('quizes/new',{quiz: quiz, errors: err.errors});
+		}else{
+			quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+				res.redirect('/quizes');
+			})
+		}
+	});
 };

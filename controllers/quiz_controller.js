@@ -39,27 +39,7 @@ exports.answer = function(req,res){
 exports.index = function(req,res){
 	if (req.query.search !== "" && req.query.search!==undefined){
 		var search= '%' +(String(req.query.search)).replace(/\s/g,"%")+'%';
-		models.Quiz.findAll({where: ["pregunta like ?",search]}).then(function(quizes){
-			// Ordenación alfabética
-			if(quizes !== undefined || quizes.length !== 1){
-				var max;
-				var aux;
-				var cont=0;
-				while(true){
-					max=quizes[0];
-					for (var i=1;i<quizes.length;i++){
-						if(quizes[i].pregunta<max.pregunta){
-							aux=quizes[i];
-							quizes[i]=max;
-							quizes[i-1]=aux;
-						}else{
-							max=quizes[i];
-							cont++;
-						}
-					}
-					if(cont===quizes.length-1){break;}else{cont=0;}
-				}
-			}
+		models.Quiz.findAll({where: ["pregunta like ?",search],order:['pregunta']}).then(function(quizes){
 			res.render('quizes/index.ejs',{quizes: quizes, errors: []});
 		}).catch(function(error){
 			next(error);

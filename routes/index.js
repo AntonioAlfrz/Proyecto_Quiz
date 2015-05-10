@@ -5,6 +5,8 @@ var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
+var statisticsController = require('../controllers/statistics_controller');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Quiz', errors: [] });
@@ -23,6 +25,9 @@ router.get('/logout',sessionController.destroy);
 router.get('/author',function(req,res,next){
 	res.render('author');
 });
+
+// Estadísticas
+router.get('/statistics',statisticsController.load);
 
 router.get('/quizes',quizController.index);
 router.get('/quizes/:quizId(\\d+)',quizController.show);

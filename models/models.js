@@ -1,5 +1,10 @@
 var path = require('path');
 
+/* Al realizar cambios en la BBDD:
+heroku pg:reset postgres (Resetear)
+heroku run bash -> npm start (Inicializar)
+*/
+
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database
 // SQLite   DATABASE_URL = sqlite://:@:/
 var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);

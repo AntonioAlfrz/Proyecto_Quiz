@@ -23,11 +23,11 @@ router.get('/logout',sessionController.destroy);
 
 // Autor
 router.get('/author',function(req,res,next){
-	res.render('author');
+	res.render('author',{errors: []});
 });
 
 // Estadísticas
-router.get('/statistics',statisticsController.load);
+router.get('/statistics',statisticsController.calculate);
 
 router.get('/quizes',quizController.index);
 router.get('/quizes/:quizId(\\d+)',quizController.show);

@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load);
 router.param('commentId', commentController.load);
 
-// Definición de rutas de sésión
+// Definición de rutas de sesión
 router.get('/login',sessionController.new);
 router.post('/login', sessionController.create);
 router.get('/logout',sessionController.destroy);

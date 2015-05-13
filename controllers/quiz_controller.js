@@ -50,15 +50,19 @@ exports.answer = function(req,res){
 
 // GET /quizes
 exports.index = function(req,res,next){
+	var options = {};
+	if(req.user){
+		options.where = {UserId: req.user.id}
+	}
 	if (req.query.search !== "" && req.query.search!==undefined){
 		var search= '%' +(String(req.query.search)).replace(/\s/g,"%")+'%';
-		models.Quiz.findAll({where: ["pregunta like ?",search],order:['pregunta']}).then(function(quizes){
+		models.Quiz.findAll({where: ["pregunta like ?",search],order:['pregunta']},options).then(function(quizes){
 			res.render('quizes/index.ejs',{quizes: quizes, errors: []});
 		}).catch(function(error){
 			next(error);
 		})
 	}else{
-		models.Quiz.findAll().then(function(quizes){
+		models.Quiz.findAll(options).then(function(quizes){
 			res.render('quizes/index.ejs',{quizes: quizes, errors: []});
 		}).catch(function(error){
 			next(error);

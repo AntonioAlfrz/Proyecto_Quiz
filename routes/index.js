@@ -38,17 +38,17 @@ router.post('/user',userController.create);
 router.get('/user/:userId(\\d+)/edit',sessionController.loginRequired,userController.ownershipRequired, userController.edit);
 router.put('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.update);
 router.delete('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.destroy);
+router.get('/user/:userId(\\d+)/quizes',  quizController.index);     // ver las preguntas de un usuario
 
 // Definición rutas de quizes
-router.get('/user/:userId(\\d+)/quizes',  quizController.index);     // ver las preguntas de un usuario
 router.get('/quizes',quizController.index);
 router.get('/quizes/:quizId(\\d+)',quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer',quizController.answer);
 router.get('/quizes/new', sessionController.loginRequired, quizController.new);
-router.post('/quizes/create', sessionController.loginRequired, multer({ dest: '.public/media/'}), quizController.create);
-router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired,userController.ownershipRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, userController.ownershipRequired, multer({ dest: '.public/media/'}), quizController.update);
-router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired,userController.ownershipRequired, quizController.destroy);
+router.post('/quizes/create', sessionController.loginRequired, multer({ dest: './public/media/'}), quizController.create);
+router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired,quizController.ownershipRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizController.ownershipRequired, multer({ dest: './public/media/'}), quizController.update);
+router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired,quizController.ownershipRequired, quizController.destroy);
 
 router.get('/quizes/:quizId(\\d+)/comments/new',commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',commentController.create);

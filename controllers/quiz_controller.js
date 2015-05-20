@@ -32,14 +32,19 @@ exports.load=function(req,res,next,quizId){
 
 // GET /quiz/:id
 exports.show = function (req,res){
+	var bool;
 	if(req.session.user){
 		req.quiz.getFavs().then(function(users){
-			var bool=users.some(function(user){
+			bool=users.some(function(user){
 				return user.id===req.session.user.id;
 			});
+			console.log(bool);
 			res.render('quizes/show',{quiz: req.quiz, errors: [], fav: bool});
 		}).catch(function(error){next(error)});
+	}else{
+		res.render('quizes/show',{quiz: req.quiz, errors: [], fav:bool});
 	}
+	
 };
 
 // GET /quizes/:id/answer

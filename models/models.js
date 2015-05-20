@@ -1,8 +1,8 @@
 var path = require('path');
 
 /* Al realizar cambios en la BBDD:
-heroku pg:reset postgres (Resetear)
-heroku run bash -> npm start (Inicializar)
+heroku pg:reset postgres (Resetear, no hay espacio pg:reset)
+heroku run bash -> npm start (ó heroku restart,Inicializar)
 */
 
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database

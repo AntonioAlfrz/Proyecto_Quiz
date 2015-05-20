@@ -24,8 +24,7 @@ exports.load = function(req, res, next, userId) {
 			req.user = user;
 			next();
 		} else{next(new Error('No existe userId=' + userId))}
-	}
-	).catch(function(error){next(error)});
+	}).catch(function(error){next(error)});
 };
 
 // Comprueba si el usuario esta registrado en users

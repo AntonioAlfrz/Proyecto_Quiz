@@ -1,10 +1,9 @@
 var models = require('../models/models.js');
 
-exports.calculate = function(req,res){ 
+exports.calculate = function(req,res,next){ 
 	var with_comments=[];
 	var no_comments;
 	models.Quiz.count().then(function(quizes){
-		// {group: "QuizId"}
 		models.Comment.findAll({where: {publicado: true}}).then(function(comments){
 			no_comments=quizes;
 			for (var i=0; i<comments.length; i++){
@@ -13,7 +12,7 @@ exports.calculate = function(req,res){
 				}
 				with_comments[comments[i].QuizId]=1;
 			}
-			res.render('statistics.ejs',
+			res.render('statistics',
 			{quizes: quizes,
 				comments: comments.length,
 				avg: comments.length/quizes,
@@ -23,5 +22,4 @@ exports.calculate = function(req,res){
 			});
 		});
 	});
-	
 }

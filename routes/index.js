@@ -6,6 +6,7 @@ var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var userController = require('../controllers/user_controller');
+var favouritesController = require('../controllers/favourites_controller');
 
 var statisticsController = require('../controllers/statistics_controller');
 
@@ -31,6 +32,12 @@ router.get('/author',function(req,res,next){
 
 // Estadísticas
 router.get('/statistics',statisticsController.calculate);
+
+// Favoritos
+router.get('/user/:userId(\\d+)/favourites',sessionController.loginRequired,userController.ownershipRequired,favouritesController.index);
+router.put('/user/:userId(\\d+)/favourites/:quizId(\\d+)', sessionController.loginRequired,userController.ownershipRequired,
+											favouritesController.update);
+router.delete('/user/:userId(\\d+)/favourites/:quizId(\\d+)',sessionController.loginRequired,userController.ownershipRequired,favouritesController.destroy);
 
 // Definición de rutas de cuenta
 router.get('/user',userController.new);

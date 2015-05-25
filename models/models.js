@@ -55,8 +55,8 @@ exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
 
+/*
 // sequelize.sync() inicializa tabla de preguntas en DB
-
 sequelize.sync().then(function(){
   // then(..) ejecuta el manejador una vez creada la tabla
   User.count().then(function (count){
@@ -81,3 +81,4 @@ sequelize.sync().then(function(){
       };
   });
 });
+*/

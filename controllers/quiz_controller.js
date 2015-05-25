@@ -61,6 +61,7 @@ exports.answer = function(req,res){
 
 // GET /quizes
 exports.index = function(req,res,next){
+	console.log(req.session.redir);
 	var favs=[];
 	var options = {};
 	options.where={};
@@ -97,7 +98,15 @@ exports.new = function(req,res){
 };
 
 // POST /quizes/create
-exports.create = function(req,res){
+exports.create = function(req,res,next){
+	if(!req.body.quiz){
+		req.body.quiz={pregunta:"",respuesta:""};
+	}else{
+		req.body.quiz={
+			pregunta: ("pregunta" in req.body.quiz) ? req.body.quiz.pregunta: "",
+			respuesta: ("respuesta" in req.body.quiz) ? req.body.quiz.respuesta: ""
+		}
+	}
 	req.body.quiz.UserId = req.session.user.id;
 	if(req.files.image){
 		req.body.quiz.image = req.files.image.name;
@@ -124,12 +133,17 @@ exports.edit = function(req,res){
 
 // PUT /quizes/:id
 exports.update = function(req, res) {
+	if(!req.body.quiz){
+		req.quiz.pregunta="";
+		req.quiz.respuesta="";
+	}else{
+		req.quiz["pregunta"]=("pregunta" in req.body.quiz) ? req.body.quiz.pregunta: "";
+		req.quiz["respuesta"]=("respuesta" in req.body.quiz) ? req.body.quiz.respuesta: "";
+	}
+	console.log(req.quiz);
 	if(req.files.image){
 		req.quiz.image = req.files.image.name;
 	}
-	req.quiz.pregunta  = req.body.quiz.pregunta;
-	req.quiz.respuesta = req.body.quiz.respuesta;
-
 	req.quiz.validate().then(function(err){
 		if (err) {
 			res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});

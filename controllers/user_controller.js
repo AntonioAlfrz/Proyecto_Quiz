@@ -56,12 +56,13 @@ exports.edit = function(req, res) {
 
 // PUT /user/:id
 exports.update = function(req, res, next) {
+	console.log(req.body.user.username);
 	req.user.username  = req.body.user.username;
 	req.user.password  = req.body.user.password;
 
 	req.user.validate().then(function(err){
 		if (err) {
-			res.render('user/' + req.user.id, {user: req.user, errors: err.errors});
+			res.render('user/edit', {user: req.user, errors: err.errors});
 		} else {
 			req.user
 			.save( {fields: ["username", "password"]})

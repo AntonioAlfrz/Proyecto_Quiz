@@ -60,6 +60,6 @@ router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired,quizContr
 router.get('/quizes/:quizId(\\d+)/comments/new',commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',
-	sessionController.loginRequired,userController.ownershipRequired, commentController.publish);
+	sessionController.loginRequired,commentController.ownershipRequired, commentController.publish);
 
 module.exports = router;

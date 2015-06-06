@@ -40,7 +40,32 @@ module.exports = function(sequelize, DataTypes) {
             isAdmin: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
-            }    
+            },
+            email: {
+                type: DataTypes.STRING,
+                unique: true,
+                validate: { 
+                    notEmpty: {msg: " Falta email"},
+                    isUnique: function (value, next) {
+                        var self = this;
+                        User.find({where: {email: value}}).then(function (user) {
+                            if (user && self.id !== user.id) {
+                                return next('Username ya utilizado');
+                            }
+                            return next();
+                        }).catch(function (err) {
+                            return next(err);
+                        });
+                    }
+                }
+            },
+            secret: {
+                type: DataTypes.INTEGER,
+            },
+            verified: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
         },
         {
             instanceMethods: {

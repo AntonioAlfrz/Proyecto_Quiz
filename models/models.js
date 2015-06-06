@@ -63,8 +63,8 @@ sequelize.sync().then(function(){
 
   	if(count === 0) {   // La tabla se inicializa solo si está vacía
       User.bulkCreate(
-        [{username: 'admin', password: '1234', isAdmin: true},
-        {username: 'Antonio', password: 'reverse', isAdmin: false}]
+        [{username: 'admin', password: '1234', isAdmin: true, secret: Math.floor(Math.random()*100), verified: true},
+        {username: 'Antonio', password: 'reverse', isAdmin: false, secret: Math.floor(Math.random()*100), verified: true}]
         ).then(function(){
           console.log(" BBDD User inicializada");
           Quiz.count().then(function(count){

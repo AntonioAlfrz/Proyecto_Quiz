@@ -42,6 +42,8 @@ router.delete('/user/:userId(\\d+)/favourites/:quizId(\\d+)',sessionController.l
 // Definición de rutas de cuenta
 router.get('/user',userController.new);
 router.post('/user',userController.create);
+router.get('/user/verify',userController.verify);
+router.post('/user/verify',userController.verificado);
 router.get('/user/:userId(\\d+)/edit',sessionController.loginRequired,userController.ownershipRequired, userController.edit);
 router.put('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.update);
 router.delete('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.destroy);

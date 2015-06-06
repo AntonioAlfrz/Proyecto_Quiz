@@ -1,8 +1,8 @@
 <html>
+<h2><%=quiz.pregunta%>
 <%if (quiz.image){%>
-<p><img class="quiz_img" src="/media/<%= quiz.image %>"></p>
+<img width= "200px" height="auto" src="/media/<%= quiz.image %>">
 <%}%>
-<p>Pregunta: <%=quiz.pregunta%></p>
 		<%if (session.user){%>
 			<%if (fav){%>
 				<form method="post" action="/user/<%=session.user.id %>/favourites/<%= quiz.id %>?_method=delete">
@@ -14,12 +14,14 @@
 			</form>
 				<%}%>
 		<%}%>
-<form method="get" action="/quizes/<%=quiz.id %>/answer">
-	<input type="text" name="respuesta"/>
-	<input type="submit" value="Enviar">
+		</h2>
+<form role="form" method="get" action="/quizes/<%=quiz.id %>/answer">
+	<input type="text" class="form-control" name="respuesta"/>
+	<br>
+	<button type="submit" class="btn btn-default"> Responder</button>
 </form>
-
-<p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo comentario</button></a></p>
+<br>
+<p><a href="/quizes/<%= quiz.id %>/comments/new"><button class="btn btn-primary">Nuevo comentario</button></a></p>
 
 <p><strong>Comentarios:</strong></p>
 <%for(index in quiz.Comments){%>

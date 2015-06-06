@@ -37,7 +37,7 @@
           <li><a href="/user/<%=session.user.id%>/favourites">Favoritos</a></li>
           <%}%>
 
-          <li><a href="/">Settings</a></li>
+          <li><a href="/">Otros</a></li>
         </ul>
         <%if(!session.user){%>
         <ul class="nav navbar-nav navbar-right">
@@ -46,8 +46,7 @@
         </ul>
         <%}else{%>
         <ul class="nav navbar-nav navbar-right">
-          <%=session.user.username%>
-          <li><a href="/user/<%=session.user.id%>/edit"> Settings </a></li>
+          <li><a href="/user/<%=session.user.id%>/edit" style="font-weight:bold"> <%=session.user.username%> </a></li>
           <li><a href="/logout"> Logout</a></li>
         </ul>
         <%}%>

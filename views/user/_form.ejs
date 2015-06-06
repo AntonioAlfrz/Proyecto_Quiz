@@ -1,8 +1,12 @@
 <html>
-<label for="preg" class="rem">Username:</label>
-<input type="text" id="username" name="user[username]"/><p>
-<label for="resp" class="rem">Password:</label>
-<input type="password" id="pass" name="user[password]"/> <p>
-<a href="/"><button type="button">Cancelar</button></a>
-<button type="button" onClick="this.disabled=true; this.form.submit();" value="Enviar">Enviar</button>
+<div class="form-group">
+	<label for="preg">Username:</label>
+	<input type="text" class="form-control" id="preg" name="user[username]"/>
+</div>
+<div class="form-group">
+	<label for="resp">Password:</label>
+	<input type="password" class="form-control" id="resp" name="user[password]"/>
+</div>
+<a href="/"><button type="button" class="btn btn-default">Cancelar</button></a>
+<button type="button" class="btn btn-default" onClick="this.disabled=true; this.form.submit();" value="Enviar">Enviar</button>
 </html>

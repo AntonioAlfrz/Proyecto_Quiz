@@ -61,7 +61,6 @@ exports.answer = function(req,res){
 
 // GET /quizes
 exports.index = function(req,res,next){
-	console.log(req.session.redir);
 	var favs=[];
 	var options = {};
 	options.where={};

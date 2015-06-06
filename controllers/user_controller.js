@@ -56,7 +56,6 @@ exports.edit = function(req, res) {
 
 // PUT /user/:id
 exports.update = function(req, res, next) {
-	console.log(req.body.user.username);
 	req.user.username  = req.body.user.username;
 	req.user.password  = req.body.user.password;
 

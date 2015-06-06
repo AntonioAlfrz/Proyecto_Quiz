@@ -12,8 +12,6 @@ exports.ownershipRequired = function(req, res, next){
       var logUser = req.session.user.id;
       var isAdmin = req.session.user.isAdmin;
 
-      console.log(objQuizOwner, logUser, isAdmin);
-
       if (isAdmin || objQuizOwner === logUser) {
         next();
       } else {

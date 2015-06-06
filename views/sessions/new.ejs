@@ -1,19 +1,19 @@
+<html>
 <h2>Login</h2>
 
-<form method='POST' action='/login'>
+<form role="form" method='POST' action='/login'>
 
-  <div class="field">
-    <label for="login">Login:</label><br />
-    <input type="text" id="login" name="login" size="30" />
+  <div class="form-group">
+    <label for="login">Login:</label>
+    <input type="text" class="form-control" id="login" name="login"/>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <label for="password">Password:</label><br />
-    <input type="password" id="password" name="password" size="30" />
+    <input type="password" class="form-control" id="password" name="password"/>
   </div>
 
-  <div class="actions">
-    <input name="commit" type="submit" value="Login" />
-  </div>
+  <button type"submit" class="btn btn-default"> Enviar </button>
 
 </form>
+</html>

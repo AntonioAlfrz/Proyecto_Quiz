@@ -1,10 +1,12 @@
 <html>
-<form method="get" action="/quizes">
-	<p>Busque una pregunta</p>
-	<input type="text" name="search"/>
-	<input type="submit" value="Enviar">
+<form role="form" method="get" action="/quizes">
+	<div class="form-group">
+	<label for="buscar">Busque una pregunta</label>
+	<input type="text" class="form-control" name="search" id="buscar"/>
+	<button type="submit" class="btn btn-default">Enviar</button>
+	</div>
 </form>
-<table>
+<table style="margin: 0 auto">
 	<% var i; for (i=0; i<quizes.length; i++){ %>
 	<tr>
 		<td><a href="/quizes/<%=quizes[i].id%>"><%=quizes[i].pregunta%></a></td>

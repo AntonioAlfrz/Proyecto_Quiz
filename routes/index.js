@@ -48,7 +48,7 @@ router.get('/gestion',sessionController.loginRequired,userController.adminView);
 router.get('/user',userController.new);
 router.post('/user',userController.create);
 router.get('/user/verify',userController.verify);
-router.post('/user/verify',userController.verificado);
+router.put('/user/verify',userController.verificado);
 
 //Gestión
 router.get('/user/:userId(\\d+)/edit',sessionController.loginRequired,userController.ownershipRequired, userController.edit);

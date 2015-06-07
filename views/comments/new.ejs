@@ -3,7 +3,7 @@
 <form role="form" method="post" action="/quizes/<%=quizid%>/comments/" >
 	<div class="form-group">
 		<label for="comment">Añadir comentario:</label>     
-		<input type="text" id="comment" name="comment"/>
+		<input type="text" class="form-control" id="comment" name="comment"/>
 	</div>
 	<button type="submit" class="btn btn-default" onClick="this.disabled=true; this.form.submit();">Enviar</button>
 </form>

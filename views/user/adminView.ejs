@@ -1,0 +1,15 @@
+<html>
+<table style="margin: 0 auto; border-collapse: separate; border-spacing: 10px;">
+	<% var i; for (i=0; i<users.length; i++){ %>
+	<tr>
+		<td><%=users[i].username%></td>
+		<td>
+			<form method="post" action="/user/<%= users[i].id %>?_method=delete">
+				<button type="submit" class="btn btn-danger" onClick="return confirm('Borrar cuenta: <%= users[i].username %>');">
+					Eliminar cuenta
+				</button>
+			</form>
+		</td>
+	</tr>
+	<% } %>
+</table>

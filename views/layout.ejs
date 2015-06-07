@@ -35,9 +35,10 @@
           <% if(session.user){%>
           <li><a href="/user/<%=session.user.id%>/quizes">Mis Preguntas</a></li>
           <li><a href="/user/<%=session.user.id%>/favourites">Favoritos</a></li>
+          <% if(session.user.isAdmin){%>
+            <li><a href="/gestion">Administrador</a></li>
           <%}%>
-
-          <li><a href="/">Otros</a></li>
+          <%}%>
         </ul>
         <%if(!session.user){%>
         <ul class="nav navbar-nav navbar-right">
@@ -58,7 +59,7 @@
   <!-- Contenido-->
   <section class= "container-fluid" style="text-align: center">
     <% if (errors.length) { %>
-    <span id='ErrorMsgs'>
+    <span>
       <% for (var i in errors) { %>
       <span style= "color:#f61"> <%= errors[i].message %> </span><br/>
       <% } %>

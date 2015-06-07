@@ -83,17 +83,41 @@ exports.new = function(req, res) {
 };
 
 // DELETE /user/:id
-exports.destroy = function(req, res) {
+exports.destroy = function(req, res, next) {
 	req.user.destroy().then( function() {
+		if(req.session.user.isAdmin){
+			res.redirect(req.session.redir.toString());
+		}
 		delete req.session.user;
 		res.redirect('/');
 	}).catch(function(error){next(error)});
 };
 
+exports.adminView = function(req,res){
+	if(req.session.user.isAdmin){
+		models.User.findAll({
+			where: {
+				isAdmin: false,
+				username:{
+					$not: req.session.user.username
+				}
+			}
+		}).then(function(users){
+			res.render('user/adminView', {users: users, errors: []});
+		}).catch(function(error){
+			next(error);
+		});
+	}else{
+		res.redirect('/');
+	}
+};
+
+// GET /user/verify
 exports.verify = function(req,res){
 	res.render('user/verify', {errors: []});
 };
 
+// POST /user/verify
 exports.verificado = function(req,res,next){
 	models.User.find({
 		where: {
@@ -105,19 +129,22 @@ exports.verificado = function(req,res,next){
 
 				user.verified=true;
 				user.save( {fields: ["verified"]}).then( function(){
-					res.render("Usuario verificado");
+					req.session.user = {id:user.id, username:user.username, isAdmin: user.isAdmin};
+					res.render("mensaje",{mensaje: "Usuario verificado", errors: []});
 				}).catch(function(error){next(error)});	
 			}else{
-				next(new Error("Número secreto no válido"));
+				res.render("user/verify", {errors: [{message: "Número secreto no válido"}]});
 			}
 		}else{
-			next(new Error('No existe usuario: ' + req.body.username));
+			res.render("user/verify", {errors: [{message: "No existe usuario"}]});
 		}
 		
 	});
 };
 
+//POST /user
 exports.create = function(req, res){
+	// Envío de email de confirmación
 	var rand=Math.floor( Math.random() * 100 );
 	var nodemailer = require("nodemailer");
 	var smtpTransport = nodemailer.createTransport({
@@ -131,29 +158,25 @@ exports.create = function(req, res){
 	var mailOptions={
 		to : req.body.user.email,
 		subject : "Confirma la cuenta para Quiz",
-		text : "Número secreto para confirmar tu cuenta: "+rand
-		+ ".\n Para confirmar https://192.168.157.136:5000/verify" ,
+		text : "Número secreto para confirmar tu cuenta "+req.body.user.username+": "+rand
+		+ ".\n Para confirmar https://quiz-alfrz.herokuapp.com/user/verify" ,
 	};
-	console.log(mailOptions);
-	smtpTransport.sendMail(mailOptions, function(error, response){
-		if(error){
-			console.log("Error " +error);
-			next(error);
-			return;
-		}else{
-			var user = models.User.build( req.body.user );
-			user.secret = rand;
-			console.log("Usuario" + user);
-			user.validate().then(function(err){
-				if (err) {
-					res.render('user/new', {user: user, errors: err.errors});
-				} else {
-					user.save({fields: ["username", "password","email","secret"]})
-					.then( function(){
-						//req.session.user = {id:user.id, username:user.username};
-						res.redirect('/');
-					}); 
-				}
+	var user = models.User.build( req.body.user );
+	user.secret = rand;
+	console.log("Usuario" + user);
+	user.validate().then(function(err){
+		if (err) {
+			res.render('user/new', {user: user, errors: err.errors});
+		} else {
+			user.save({fields: ["username", "password","email","secret"]})
+			.then( function(){
+				smtpTransport.sendMail(mailOptions, function(error, response){
+					if(error){
+						console.log("Error " +error);
+						next(error);
+					}
+					res.redirect('/');					
+				});
 			}).catch(function(error){next(error)});
 		}
 	});

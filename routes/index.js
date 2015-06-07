@@ -40,10 +40,14 @@ router.put('/user/:userId(\\d+)/favourites/:quizId(\\d+)', sessionController.log
 router.delete('/user/:userId(\\d+)/favourites/:quizId(\\d+)',sessionController.loginRequired,userController.ownershipRequired,favouritesController.destroy);
 
 // Definición de rutas de cuenta
+//Admin
+router.get('/gestion',sessionController.loginRequired,userController.adminView);
+//Creación
 router.get('/user',userController.new);
 router.post('/user',userController.create);
 router.get('/user/verify',userController.verify);
 router.post('/user/verify',userController.verificado);
+//Gestión
 router.get('/user/:userId(\\d+)/edit',sessionController.loginRequired,userController.ownershipRequired, userController.edit);
 router.put('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.update);
 router.delete('/user/:userId(\\d+)',  sessionController.loginRequired,userController.ownershipRequired, userController.destroy);

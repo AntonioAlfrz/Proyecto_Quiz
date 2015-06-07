@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
                         var self = this;
                         User.find({where: {email: value}}).then(function (user) {
                             if (user && self.id !== user.id) {
-                                return next('Username ya utilizado');
+                                return next('email ya utilizado');
                             }
                             return next();
                         }).catch(function (err) {

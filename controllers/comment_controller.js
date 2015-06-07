@@ -46,13 +46,12 @@ exports.new = function(req, res) {
 
 // POST /quizes/:quizId/comments
 exports.create = function(req, res) {
-  if(req.body.comment.texto===""){
+  if(req.body.comment===""){
     // Comentario vacío
-    res.render('comments/new.ejs', {quizid: req.params.quizId, errors: []});
-    return;
+    res.render('comments/new.ejs', {quizid: req.params.quizId, errors: [{message: "Comentario vacío"}]});
   }
   var comment = models.Comment.build(
-    { texto: req.body.comment.texto,          
+    { texto: req.body.comment,          
       QuizId: req.params.quizId
     });
 

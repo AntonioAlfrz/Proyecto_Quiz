@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 quiz.sqlite
 public/media
+.env
+config/config.json

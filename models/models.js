@@ -3,6 +3,15 @@ var path = require('path');
 /* Al realizar cambios en la BBDD:
 heroku pg:reset postgres (Resetear, no hay espacio pg:reset)
 heroku run bash -> npm start (ó heroku restart,Inicializar)
+(Local)
+foreman run node config/mkconfig.js
+sequelize db:migrate
+(Heroku)
+heroku run bash
+node config/mkconfig.js
+
+Añadir var:
+heroku config:add PASSWORD_ENCRYPTION_KEY='...'
 */
 
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database
@@ -55,7 +64,6 @@ exports.Quiz = Quiz;
 exports.Comment = Comment;
 exports.User = User;
 
-/*
 // sequelize.sync() inicializa tabla de preguntas en DB
 sequelize.sync().then(function(){
   // then(..) ejecuta el manejador una vez creada la tabla
@@ -81,4 +89,3 @@ sequelize.sync().then(function(){
       };
   });
 });
-*/

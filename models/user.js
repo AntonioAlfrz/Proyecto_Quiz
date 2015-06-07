@@ -60,7 +60,7 @@ module.exports = function(sequelize, DataTypes) {
                 }
             },
             secret: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
             },
             verified: {
                 type: DataTypes.BOOLEAN,

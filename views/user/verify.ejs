@@ -8,10 +8,10 @@
 
   <div class="form-group">
     <label for="secreto">Número secreto:</label>
-    <input type="number" class="form-control" id="secret" name="secret"/>
+    <input type="text" class="form-control" id="secret" name="secret"/>
   </div>
 
-  <button type"submit" class="btn btn-default"> Confirmar </button>
+  <button type"submit" onClick="this.disabled=true; this.form.submit();" class="btn btn-default"> Confirmar </button>
 
 </form>
 </html>
